@@ -1,0 +1,8 @@
+Matrix
+*.out
+*.exe
+*.o
+*.swp
+*.swo
+*.pdf
+.vscode
