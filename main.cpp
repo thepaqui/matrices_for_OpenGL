@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:55 by thepaqui          #+#    #+#             */
-/*   Updated: 2023/12/28 01:55:43 by thepaqui         ###   ########.fr       */
+/*   Updated: 2023/12/28 02:12:21 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,17 @@ int	main()
 
 	Matrix4<int>	mat1plusid = myMat1 + id;
 	Matrix4<int>	mat1minusid = myMat1 - id;
+	Matrix4<int>	mat1x2 = 2 * myMat1;
+	Matrix4<double>	mat2x3 = 3.0 * myMat2;
 
 	std::cout << myMat1.getRows() << " " << myMat1.getCols() << std::endl
 		<< myMat1 << std::endl
 		<< id << std::endl
 		<< mat1plusid << std::endl
 		<< mat1minusid << std::endl
-		<< myMat2;
+		<< mat1x2 << std::endl
+		<< myMat2 << std::endl
+		<< mat2x3;
 
 	return 0;
 }

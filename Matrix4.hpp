@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:39:03 by thepaqui          #+#    #+#             */
-/*   Updated: 2023/12/28 01:54:41 by thepaqui         ###   ########.fr       */
+/*   Updated: 2023/12/28 02:08:38 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,17 @@ public	:
 	Matrix4		&operator=(const Matrix4 &obj);
 	Matrix4		operator+(const Matrix4 &obj) const;
 	Matrix4		operator-(const Matrix4 &obj) const;
+	Matrix4		operator*(const T n) const;
 
 	inline size_t	getRows() const noexcept { return this->_rows; };
 	inline size_t	getCols() const noexcept { return this->_columns; };
 	inline const T	*getData() const noexcept { return this->_data.data(); };
 	T				getElem(const uint8_t i, const uint8_t j) const;
+	void			setElem(const uint8_t i, const uint8_t j, const T n);
 };
 
+template <typename T>
+Matrix4<T>		operator*(const T n, const Matrix4<T> &obj);
 template <typename T>
 std::ostream	&operator<<(std::ostream &ostream, const Matrix4<T> &obj);
 
