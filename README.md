@@ -1,3 +1,3 @@
 # matrices
 
-Trying to represent matrices in c++20
+Representing matrices in c++20
