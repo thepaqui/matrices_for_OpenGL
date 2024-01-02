@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:39:03 by thepaqui          #+#    #+#             */
-/*   Updated: 2023/12/28 02:08:38 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/02 15:12:46 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ public	:
 	Matrix4		operator+(const Matrix4 &obj) const;
 	Matrix4		operator-(const Matrix4 &obj) const;
 	Matrix4		operator*(const T n) const;
+	Matrix4		operator*(const Matrix4 &obj) const;
 
 	inline size_t	getRows() const noexcept { return this->_rows; };
 	inline size_t	getCols() const noexcept { return this->_columns; };
