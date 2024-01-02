@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 23:33:30 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/02 23:47:51 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ Matrix<T>::Matrix(const size_t rows, const size_t columns,
 {
 	if (this->getRows() == 0 || this->getCols() == 0)
 		throw std::invalid_argument("Matrix can't have size of 0");
-	if (data.size() / this->getCols() != this->getRows())
+	if (data.size() / this->getCols() != this->getRows()
+		|| data.size() % this->getCols() != 0)
 		throw std::invalid_argument("Bad initializer list size");
 	this->_data.assign(data);
 }

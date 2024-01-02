@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 23:30:00 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/02 23:47:40 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,17 @@ void	testMatrices()
 
 	Matrix<int>	mat3trans = myMat3.transpose();
 	std::cout << "Mat3 (transposed)\n" << mat3trans << std::endl;
+
+	Matrix<int>	myMat4(2, 3, {
+		1,	8,	2,
+		4,	8,	40
+	});
+	std::cout << "Mat4\n" << myMat4 << std::endl;
+
+	Matrix<int>	mat4trans = myMat4.transpose();
+	std::cout << "Mat4 (transposed)\n" << mat4trans << std::endl;
+
+	myMat1 = myMat4;
 }
 
 void	testVectors()
