@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests_new.cpp                                      :+:      :+:    :+:   */
+/*   tests.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 22:51:18 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/02 23:30:00 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	testMatrices()
 	});
 	std::cout << "Mat1\n" << myMat1 << std::endl;
 
-	Matrix<int>	id(4, 4);
+	Matrix<int>	id(4, 4, MAT_IDENTITY);
 	std::cout << "id (default)\n" << id << std::endl;
 
 	Matrix<int>	mat1plusid = myMat1 + id;
@@ -79,7 +79,7 @@ void	testVectors()
 	});
 	std::cout << "Vec1\n" << myVec1 << std::endl;
 
-	Matrix<int>	id(4, 1);
+	Matrix<int>	id(4, 1, MAT_VECTOR);
 	std::cout << "id (default)\n" << id << std::endl;
 
 	Matrix<int>	vec1plusid = myVec1 + id;
@@ -99,6 +99,9 @@ void	testVectors()
 	});
 	std::cout << "Vec2\n" << myVec2 << std::endl;
 
-	Matrix<double>	mat2x3 = myVec2 * 3.0;
-	std::cout << "Vec2 * 3.0\n" << mat2x3 << std::endl;
+	Matrix<double>	vec2x3 = myVec2 * 3.0;
+	std::cout << "Vec2 * 3.0\n" << vec2x3 << std::endl;
+
+	Matrix<double>	vec2trans = myVec2.transpose();
+	std::cout << "Vec2 (transposed)\n" << vec2trans << std::endl;
 }

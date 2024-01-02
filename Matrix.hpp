@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 22:27:49 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/02 23:33:36 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 # include <vector>
 # include <initializer_list>
 # include <stdexcept>
+
+# define MAT_REGULAR 0
+# define MAT_VECTOR 1
+# define MAT_IDENTITY 2
+typedef uint8_t Mat_type;
 
 template <typename T>
 class Matrix
@@ -29,9 +34,10 @@ private	:
 	{ return (i * this->_columns + j); };
 
 public	:
-	Matrix(const size_t rows, const size_t columns);
+	Matrix(const size_t rows, const size_t columns, Mat_type type = MAT_REGULAR);
 	Matrix(const Matrix &obj);
-	Matrix(const size_t rows, const size_t columns, std::initializer_list<T> data);
+	Matrix(const size_t rows, const size_t columns,
+		std::initializer_list<T> data);
 	~Matrix() {};
 
 	inline size_t	getRows() const noexcept { return this->_rows; };

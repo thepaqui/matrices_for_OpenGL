@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 22:50:03 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/02 23:33:30 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,27 @@
 
 // Constructors
 
+// Unspecified type is MAT_REGULAR
+// MAT_REGULAR fills with 0s
+// MAT_VECTOR fills with 1s
+// MAT_IDENTITY creates an identity matrix of given size if possible
 template <typename T>
-Matrix<T>::Matrix(const size_t rows, const size_t columns)
+Matrix<T>::Matrix(const size_t rows, const size_t columns, Mat_type type)
 : _rows(rows), _columns(columns)
 {
+	if (type != MAT_REGULAR && type != MAT_VECTOR && type != MAT_IDENTITY)
+		throw std::invalid_argument("Invalid matrix type");
+
 	if (this->getRows() == 0 || this->getCols() == 0)
 		throw std::invalid_argument("Matrix can't have size of 0");
-	if (this->getRows() == 4 && this->getCols() == 1)
-		_data.assign({1, 1, 1, 1});
-	else if (this->getRows() != this->getCols())
-		throw std::invalid_argument("Identity Matrix needs to be square");
-	else
+
+	if (type == MAT_VECTOR && this->getCols() != 1 && this->getRows() != 1)
+		throw std::invalid_argument("Invalid vector size");
+
+	if (type == MAT_IDENTITY)
 	{
+		if (this->getRows() != this->getCols())
+			throw std::invalid_argument("Identity matrix needs to be square");
 		for (size_t i = 0; i < this->getRows(); i++)
 		{
 			for (size_t j = 0; j < this->getCols(); j++)
@@ -38,7 +47,14 @@ Matrix<T>::Matrix(const size_t rows, const size_t columns)
 					_data.push_back(0);
 			}
 		}
+		return ;
 	}
+
+	size_t	size = this->getCols() * this->getRows();
+	if (type == MAT_VECTOR)
+		_data.assign(size, 1);
+	else
+		_data.assign(size, 0);
 }
 
 template <typename T>
@@ -51,7 +67,8 @@ Matrix<T>::Matrix(const Matrix<T> &obj)
 }
 
 template <typename T>
-Matrix<T>::Matrix(const size_t rows, const size_t columns, std::initializer_list<T> data)
+Matrix<T>::Matrix(const size_t rows, const size_t columns,
+	std::initializer_list<T> data)
 : _rows(rows), _columns(columns)
 {
 	if (this->getRows() == 0 || this->getCols() == 0)
@@ -87,7 +104,7 @@ Matrix<T>	&Matrix<T>::operator=(const Matrix<T> &obj)
 	if (this == &obj)
 		return (*this);
 	if (this->isSameSize(obj) == false)
-		throw std::runtime_error("Mismatched Matrix sizes when copying (assignment)");
+		throw std::runtime_error("Mismatched matrix sizes when copying (assignment)");
 	this->_data = obj._data;
 	return (*this);
 }
@@ -96,7 +113,7 @@ template <typename T>
 Matrix<T>	Matrix<T>::operator+(const Matrix<T> &obj) const
 {
 	if (this->isSameSize(obj) == false)
-		throw std::runtime_error("Mismatched Matrix sizes when adding");
+		throw std::runtime_error("Mismatched matrix sizes when adding");
 
 	Matrix<T>	ret(*this);
 	for (size_t i = 0; i < ret.getRows(); i++)
@@ -109,7 +126,7 @@ template <typename T>
 Matrix<T>	Matrix<T>::operator-(const Matrix<T> &obj) const
 {
 	if (this->isSameSize(obj) == false)
-		throw std::runtime_error("Mismatched Matrix sizes when subtracting");
+		throw std::runtime_error("Mismatched matrix sizes when subtracting");
 
 	Matrix<T>	ret(*this);
 	for (size_t i = 0; i < ret.getRows(); i++)
@@ -132,7 +149,7 @@ template <typename T>
 Matrix<T>	Matrix<T>::operator*(const Matrix &obj) const
 {
 	if (this->canMultiply(obj) == false)
-		throw std::runtime_error("Mismatched Matrix sizes when multiplying");
+		throw std::runtime_error("Mismatched matrix sizes when multiplying");
 
 	Matrix<T>	ret(this->getRows(), obj.getCols());
 	for (size_t i = 0; i < ret.getRows(); i++)
