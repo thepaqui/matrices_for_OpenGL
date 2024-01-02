@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:55 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 16:39:15 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/02 16:41:29 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	usage()
 		<< "$> ./Matrix <OPTION>\n"
 		<< "...tests defined by OPTION...\n\n"
 		<< "Options are ALL, MAT and VEC\n"
-		<< "For all tests, matrix tests and vector tests respectively"
+		<< "For all tests, matrix tests and vector tests respectively\n"
+		<< "ALL is selected by default"
 		<< std::endl;
 	return 0;
 }
