@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 23:47:40 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/03 00:10:49 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,18 @@ void	testMatrices()
 	Matrix<int>	mat4trans = myMat4.transpose();
 	std::cout << "Mat4 (transposed)\n" << mat4trans << std::endl;
 
-	myMat1 = myMat4;
+	Matrix<int>	myMat5(3, 2, {
+		2,	7,
+		5,	12,
+		7,	11
+	});
+	std::cout << "Mat5\n" << myMat5 << std::endl;
+
+	Matrix<int>	mat4xmat5 = myMat4 * myMat5;
+	std::cout << "Mat4 * Mat5\n" << mat4xmat5 << std::endl;
+
+	Matrix<int>	mat5xmat4 = myMat5 * myMat4;
+	std::cout << "Mat5 * Mat4\n" << mat5xmat4 << std::endl;
 }
 
 void	testVectors()
@@ -103,10 +114,10 @@ void	testVectors()
 	std::cout << "2 * Vec1\n" << vec1x2 << std::endl;
 
 	Matrix<double>	myVec2(4, 1, {
-		2.0,
+		42.0,
 		5.0,
 		7.5,
-		4.2
+		1.0
 	});
 	std::cout << "Vec2\n" << myVec2 << std::endl;
 
@@ -115,4 +126,15 @@ void	testVectors()
 
 	Matrix<double>	vec2trans = myVec2.transpose();
 	std::cout << "Vec2 (transposed)\n" << vec2trans << std::endl;
+
+	Matrix<double>	myMat1(4, 4, {
+		0.5,	0.0,	0.0,	0.0,
+		0.0,	2.5,	0.0,	0.0,
+		0.0,	0.0,	2.0,	0.0,
+		0.0,	0.0,	0.0,	1.0
+	});
+	std::cout << "Mat1\n" << myMat1 << std::endl;
+
+	Matrix<double>	mat1xvec2 = myMat1 * myVec2;
+	std::cout << "Mat1 * Vec2\n" << mat1xvec2 << std::endl;
 }
