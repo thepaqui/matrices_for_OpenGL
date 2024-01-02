@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 15:32:23 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/02 15:48:32 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,7 @@ Matrix4<T>	Matrix4<T>::operator*(const Matrix4 &obj) const
 		{
 			T	val = 0;
 			for (size_t p = 0; p < this->getCols(); p++)
-			{
 				val += this->getElem(i, p) * obj.getElem(p, j);
-			}
 			ret.setElem(i, j, val);
 		}
 	}
@@ -122,10 +120,10 @@ Matrix4<T>	Matrix4<T>::operator*(const Matrix4 &obj) const
 template <typename T>
 Matrix4<T>	operator*(const T n, const Matrix4<T> &obj)
 {
-	Matrix4<T>	ret(obj);
+	Matrix4<T>	ret;
 	for (size_t i = 0; i < ret.getRows(); i++)
 		for (size_t j = 0; j < ret.getCols(); j++)
-			ret.setElem(i, j, ret.getElem(i, j) * n);
+			ret.setElem(i, j, obj.getElem(i, j) * n);
 	return ret;
 }
 
@@ -141,6 +139,18 @@ std::ostream	&operator<<(std::ostream &ostream, const Matrix4<T> &obj)
 	}
 	ostream << std::flush;
 	return (ostream);
+}
+
+// Others
+
+template <typename T>
+Matrix4<T>	Matrix4<T>::transpose() const
+{
+	Matrix4	ret;
+	for (size_t i = 0; i < this->getRows(); i++)
+		for (size_t j = 0; j < this->getCols(); j++)
+			ret.setElem(j, i, this->getElem(i, j));
+	return ret;
 }
 
 #endif

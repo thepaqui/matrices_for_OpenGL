@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:55 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 15:36:46 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/02 15:49:54 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	testMatrices()
 	std::cout << "Mat1 - id\n" << mat1minusid << std::endl;
 
 	Matrix4<int>	mat1x2 = 2 * myMat1;
-	std::cout << "Mat1 * 2\n" << mat1x2 << std::endl;
+	std::cout << "2 * Mat1\n" << mat1x2 << std::endl;
 
 	Matrix4<int>	mat1xid = myMat1 * id;
 	std::cout << "Mat1 * id\n" << mat1xid << std::endl;
@@ -64,6 +64,9 @@ void	testMatrices()
 
 	Matrix4<int>	mat3xmat1 = myMat3 * myMat1;
 	std::cout << "Mat3 * Mat1\n" << mat3xmat1 << std::endl;
+
+	Matrix4<int>	mat3trans = myMat3.transpose();
+	std::cout << "Mat3 (transposed)\n" << mat3trans << std::endl;
 }
 
 int	main()
