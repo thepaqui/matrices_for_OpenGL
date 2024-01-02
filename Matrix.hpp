@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 23:33:36 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/03 00:22:05 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ public	:
 	Matrix		operator*(const T n) const;
 	Matrix		operator*(const Matrix &obj) const;
 
-	Matrix	transpose() const;
+	static Matrix	transpose(const Matrix &obj);
+	static Matrix	scaling(const T x, const T y, const T z);
+	static Matrix	translation(const T x, const T y, const T z);
 };
 
 template <typename T>

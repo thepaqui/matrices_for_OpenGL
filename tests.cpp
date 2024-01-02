@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/03 00:10:49 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/03 00:25:23 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	testMatrices()
 	Matrix<int>	mat3xmat1 = myMat3 * myMat1;
 	std::cout << "Mat3 * Mat1\n" << mat3xmat1 << std::endl;
 
-	Matrix<int>	mat3trans = myMat3.transpose();
+	Matrix<int>	mat3trans = Matrix<int>::transpose(myMat3);
 	std::cout << "Mat3 (transposed)\n" << mat3trans << std::endl;
 
 	Matrix<int>	myMat4(2, 3, {
@@ -74,7 +74,7 @@ void	testMatrices()
 	});
 	std::cout << "Mat4\n" << myMat4 << std::endl;
 
-	Matrix<int>	mat4trans = myMat4.transpose();
+	Matrix<int>	mat4trans = Matrix<int>::transpose(myMat4);
 	std::cout << "Mat4 (transposed)\n" << mat4trans << std::endl;
 
 	Matrix<int>	myMat5(3, 2, {
@@ -124,17 +124,18 @@ void	testVectors()
 	Matrix<double>	vec2x3 = myVec2 * 3.0;
 	std::cout << "Vec2 * 3.0\n" << vec2x3 << std::endl;
 
-	Matrix<double>	vec2trans = myVec2.transpose();
+	Matrix<double>	vec2trans = Matrix<double>::transpose(myVec2);
 	std::cout << "Vec2 (transposed)\n" << vec2trans << std::endl;
 
-	Matrix<double>	myMat1(4, 4, {
-		0.5,	0.0,	0.0,	0.0,
-		0.0,	2.5,	0.0,	0.0,
-		0.0,	0.0,	2.0,	0.0,
-		0.0,	0.0,	0.0,	1.0
-	});
-	std::cout << "Mat1\n" << myMat1 << std::endl;
+	Matrix<double>	Scale1 = Matrix<double>::scaling(0.5, 2.5, 2.0);
+	std::cout << "Scale1\n" << Scale1 << std::endl;
 
-	Matrix<double>	mat1xvec2 = myMat1 * myVec2;
-	std::cout << "Mat1 * Vec2\n" << mat1xvec2 << std::endl;
+	Matrix<double>	scale1xvec2 = Scale1 * myVec2;
+	std::cout << "Scale1 * Vec2\n" << scale1xvec2 << std::endl;
+
+	Matrix<double>	Trans1 = Matrix<double>::translation(1.0, 5.0, -2.0);
+	std::cout << "Trans1\n" << Trans1 << std::endl;
+
+	Matrix<double>	trans1xvec2 = Trans1 * myVec2;
+	std::cout << "Trans1 * Vec2\n" << trans1xvec2 << std::endl;
 }

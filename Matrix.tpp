@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/02 23:47:51 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/03 00:25:45 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,12 +193,32 @@ std::ostream	&operator<<(std::ostream &ostream, const Matrix<T> &obj)
 // Others
 
 template <typename T>
-Matrix<T>	Matrix<T>::transpose() const
+Matrix<T>	Matrix<T>::transpose(const Matrix &obj)
 {
-	Matrix	ret(this->getCols(), this->getRows());
-	for (size_t i = 0; i < this->getRows(); i++)
-		for (size_t j = 0; j < this->getCols(); j++)
-			ret.setElem(j, i, this->getElem(i, j));
+	Matrix	ret(obj.getCols(), obj.getRows());
+	for (size_t i = 0; i < obj.getRows(); i++)
+		for (size_t j = 0; j < obj.getCols(); j++)
+			ret.setElem(j, i, obj.getElem(i, j));
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::scaling(const T x, const T y, const T z)
+{
+	Matrix	ret(4, 4, MAT_IDENTITY);
+	ret.setElem(0, 0, x);
+	ret.setElem(1, 1, y);
+	ret.setElem(2, 2, z);
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::translation(const T x, const T y, const T z)
+{
+	Matrix	ret(4, 4, MAT_IDENTITY);
+	ret.setElem(0, 3, x);
+	ret.setElem(1, 3, y);
+	ret.setElem(2, 3, z);
 	return ret;
 }
 
