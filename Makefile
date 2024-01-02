@@ -6,7 +6,7 @@
 #    By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/26 14:39:00 by thepaqui          #+#    #+#              #
-#    Updated: 2023/12/27 23:40:38 by thepaqui         ###   ########.fr        #
+#    Updated: 2024/01/02 16:21:03 by thepaqui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CC= c++
 
 CCFLAGS= -Wall -Wextra -Werror -std=c++2a
 
-SRCS=	main.cpp
+SRCS=	tests.cpp \
+		main.cpp
 
 OBJS= $(SRCS:.cpp=.o)
 
