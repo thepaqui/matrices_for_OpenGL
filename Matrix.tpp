@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/03 00:25:45 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:41:02 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ Matrix<T>::Matrix(const size_t rows, const size_t columns, Mat_type type)
 	if (this->getRows() == 0 || this->getCols() == 0)
 		throw std::invalid_argument("Matrix can't have size of 0");
 
-	if (type == MAT_VECTOR && this->getCols() != 1 && this->getRows() != 1)
+	if (type == MAT_VECTOR && Matrix::isVector(*this) == false)
 		throw std::invalid_argument("Invalid vector size");
 
 	if (type == MAT_IDENTITY)
@@ -191,6 +191,42 @@ std::ostream	&operator<<(std::ostream &ostream, const Matrix<T> &obj)
 }
 
 // Others
+
+template <typename T>
+T	Matrix<T>::vec2DLength(const Matrix &obj)
+{
+	if (Matrix::isVector(obj) == false)
+		throw std::invalid_argument("Can only get length from a vector");
+	size_t	dimensions = obj.getCols() * obj.getRows();
+	if (dimensions < 2 || dimensions > 3)
+		throw std::invalid_argument("Bad 2D vector size (2 or 3 only)");
+
+	const T	*coordinates = obj.getData();
+	T	length = 0;
+	for (size_t i = 0; i < 2; i++)
+		length += data[i] * data[i];
+	length = sqrt(length);
+
+	return length;
+}
+
+template <typename T>
+T	Matrix<T>::vec3DLength(const Matrix &obj)
+{
+	if (Matrix::isVector(obj) == false)
+		throw std::invalid_argument("Can only get length from a vector");
+	size_t	dimensions = obj.getCols() * obj.getRows();
+	if (dimensions < 3 || dimensions > 4)
+		throw std::invalid_argument("Bad 3D vector size (3 or 4 only)");
+
+	const T	*coordinates = obj.getData();
+	T	length = 0;
+	for (size_t i = 0; i < 3; i++)
+		length += data[i] * data[i];
+	length = sqrt(length);
+
+	return length;
+}
 
 template <typename T>
 Matrix<T>	Matrix<T>::transpose(const Matrix &obj)
