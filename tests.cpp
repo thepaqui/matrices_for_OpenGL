@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 01:25:04 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 02:21:08 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,4 +155,31 @@ void	testVectors()
 
 	Matrix<double>	Trans2 = Matrix<double>::translation(-0.5, -2.0);
 	std::cout << "Trans2\n" << Trans2 << std::endl;
+
+	Matrix<double>	myVec3(4, 1, {
+		2.0,
+		5.0,
+		10.0,
+		1.0
+	});
+	std::cout << "Vec3\n" << myVec3;
+	std::cout << "length = " << Matrix<double>::vec3DLength(myVec3) << "\n" << std::endl;
+
+	Matrix<double>	Rot1 = Matrix<double>::rotationX3D(90.0);
+	std::cout << "Rot1\n" << Rot1 << std::endl;
+
+	Matrix<double>	rot1xvec3 = Rot1 * myVec3;
+	std::cout << "Rot1 * Vec3\n" << rot1xvec3 << std::endl;
+
+	Matrix<double>	Rot2 = Matrix<double>::rotationY3D(90.0);
+	std::cout << "Rot2\n" << Rot2 << std::endl;
+
+	Matrix<double>	rot2xvec3 = Rot2 * myVec3;
+	std::cout << "Rot2 * Vec3\n" << rot2xvec3 << std::endl;
+
+	Matrix<double>	Rot3 = Matrix<double>::rotationZ3D(90.0);
+	std::cout << "Rot3\n" << Rot3 << std::endl;
+
+	Matrix<double>	rot3xvec3 = Rot3 * myVec3;
+	std::cout << "Rot3 * Vec3\n" << rot3xvec3 << std::endl;
 }

@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 01:22:16 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 02:20:47 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@
 # include <vector>
 # include <initializer_list>
 # include <stdexcept>
+
 # include <cmath>
+# ifndef  M_PI
+#  define  M_PI  3.1415926535897932384626433
+# endif
 
 # define MAT_REGULAR 0
 # define MAT_VECTOR 1
@@ -66,6 +70,11 @@ public	:
 	static bool	canMultiply(const Matrix &obj1, const Matrix &obj2) noexcept
 	{ return (obj1.getRows() == obj2.getCols()); };
 
+	static T	degToRad(const T deg) noexcept
+	{ return (deg * (M_PI / 180)); };
+	static T	radToDeg(const T rad) noexcept
+	{ return (rad * (180 / M_PI)); };
+
 	static T	vec2DLength(const Matrix &obj);
 	static T	vec3DLength(const Matrix &obj);
 
@@ -76,6 +85,13 @@ public	:
 	static Matrix	scaling(const T x, const T y, const T z);
 	static Matrix	translation(const T x, const T y);
 	static Matrix	translation(const T x, const T y, const T z);
+
+	// 3D rotation around the X axis (clockwise)
+	static Matrix	rotationX3D(const T angleInDegrees);
+	// 3D rotation around the Y axis (clockwise)
+	static Matrix	rotationY3D(const T angleInDegrees);
+	// 3D rotation around the Z axis (clockwise)
+	static Matrix	rotationZ3D(const T angleInDegrees);
 };
 
 template <typename T>

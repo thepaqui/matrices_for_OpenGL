@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 01:25:38 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 02:22:13 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,6 +292,42 @@ Matrix<T>	Matrix<T>::translation(const T x, const T y, const T z)
 	ret.setElem(0, 3, x);
 	ret.setElem(1, 3, y);
 	ret.setElem(2, 3, z);
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::rotationX3D(const T angleInDegrees)
+{
+	T	rad = degToRad(angleInDegrees);
+	Matrix	ret(4, 4, MAT_IDENTITY);
+	ret.setElem(1, 1, -cos(rad));
+	ret.setElem(1, 2, sin(rad));
+	ret.setElem(2, 1, -sin(rad));
+	ret.setElem(2, 2, -cos(rad));
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::rotationY3D(const T angleInDegrees)
+{
+	T	rad = degToRad(angleInDegrees);
+	Matrix	ret(4, 4, MAT_IDENTITY);
+	ret.setElem(0, 0, -cos(rad));
+	ret.setElem(0, 2, -sin(rad));
+	ret.setElem(2, 0, sin(rad));
+	ret.setElem(2, 2, -cos(rad));
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::rotationZ3D(const T angleInDegrees)
+{
+	T	rad = degToRad(angleInDegrees);
+	Matrix	ret(4, 4, MAT_IDENTITY);
+	ret.setElem(0, 0, -cos(rad));
+	ret.setElem(0, 1, sin(rad));
+	ret.setElem(1, 0, -sin(rad));
+	ret.setElem(1, 1, -cos(rad));
 	return ret;
 }
 
