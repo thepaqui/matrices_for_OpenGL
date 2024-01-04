@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 01:11:00 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 01:22:16 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ public	:
 
 	static Matrix	transpose(const Matrix &obj);
 	static Matrix	average(const Matrix &obj1, const Matrix &obj2);
+
+	static Matrix	scaling(const T x, const T y);
 	static Matrix	scaling(const T x, const T y, const T z);
+	static Matrix	translation(const T x, const T y);
 	static Matrix	translation(const T x, const T y, const T z);
 };
 

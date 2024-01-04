@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 01:11:45 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 01:25:38 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,12 +258,30 @@ Matrix<T>	Matrix<T>::average(const Matrix &obj1, const Matrix &obj2)
 }
 
 template <typename T>
+Matrix<T>	Matrix<T>::scaling(const T x, const T y)
+{
+	Matrix	ret(3, 3, MAT_IDENTITY);
+	ret.setElem(0, 0, x);
+	ret.setElem(1, 1, y);
+	return ret;
+}
+
+template <typename T>
 Matrix<T>	Matrix<T>::scaling(const T x, const T y, const T z)
 {
 	Matrix	ret(4, 4, MAT_IDENTITY);
 	ret.setElem(0, 0, x);
 	ret.setElem(1, 1, y);
 	ret.setElem(2, 2, z);
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::translation(const T x, const T y)
+{
+	Matrix	ret(3, 3, MAT_IDENTITY);
+	ret.setElem(0, 2, x);
+	ret.setElem(1, 2, y);
 	return ret;
 }
 

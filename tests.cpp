@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 01:17:05 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 01:25:04 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,4 +149,10 @@ void	testVectors()
 
 	Matrix<double>	trans1xvec2 = Trans1 * myVec2;
 	std::cout << "Trans1 * Vec2\n" << trans1xvec2 << std::endl;
+
+	Matrix<double>	Scale2 = Matrix<double>::scaling(2.0, 1.5);
+	std::cout << "Scale2\n" << Scale2 << std::endl;
+
+	Matrix<double>	Trans2 = Matrix<double>::translation(-0.5, -2.0);
+	std::cout << "Trans2\n" << Trans2 << std::endl;
 }
