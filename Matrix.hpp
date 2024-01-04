@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 16:51:17 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 17:45:29 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ public	:
 	static Matrix	rotationY3D(const T angleInDegrees);
 	static Matrix	rotationZ3D(const T angleInDegrees);
 	static Matrix	rotation3D(const T angleInDegrees, const Matrix &axis);
+	static Matrix	axis(const T x, const T y, const T z);
 
 	static Matrix	translation2D(const T x, const T y);
 	static Matrix	translation3D(const T x, const T y, const T z);

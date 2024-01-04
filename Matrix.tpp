@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 16:52:22 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 17:45:46 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,6 +416,14 @@ Matrix<T>	Matrix<T>::rotation3D(const T angleInDegrees, const Matrix &axis)
 	ret.setElem(8, (rz * rx * _icos) - (ry * _sin));
 	ret.setElem(9, (rz * ry * _icos) + (rx * _sin));
 	ret.setElem(10, _cos + (rz * rz * _icos));
+
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::axis(const T x, const T y, const T z)
+{
+	Matrix	ret(x, y, z, Vec_axis);
 
 	return ret;
 }
