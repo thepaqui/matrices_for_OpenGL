@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 02:21:08 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 04:15:11 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	testMatrices()
 	});
 	std::cout << "Mat1\n" << myMat1 << std::endl;
 
-	Matrix<int>	id(4, 4, MAT_IDENTITY);
+	Matrix<int>	id(4, 4, Mat_identity);
 	std::cout << "id (default)\n" << id << std::endl;
 
 	Matrix<int>	mat1plusid = myMat1 + id;
@@ -111,7 +111,7 @@ void	testVectors()
 	std::cout << "Vec1\n" << myVec1;
 	std::cout << "length = " << Matrix<int>::vec3DLength(myVec1) << "\n" << std::endl;
 
-	Matrix<int>	id(4, 1, MAT_VECTOR);
+	Matrix<int>	id(4, 1, Mat_vector);
 	std::cout << "id (default)\n" << id << std::endl;
 
 	Matrix<int>	vec1plusid = myVec1 + id;
@@ -165,21 +165,28 @@ void	testVectors()
 	std::cout << "Vec3\n" << myVec3;
 	std::cout << "length = " << Matrix<double>::vec3DLength(myVec3) << "\n" << std::endl;
 
-	Matrix<double>	Rot1 = Matrix<double>::rotationX3D(90.0);
+	Matrix<double>	Rot1 = Matrix<double>::rotationX3D(-90.0);
 	std::cout << "Rot1\n" << Rot1 << std::endl;
 
 	Matrix<double>	rot1xvec3 = Rot1 * myVec3;
 	std::cout << "Rot1 * Vec3\n" << rot1xvec3 << std::endl;
 
-	Matrix<double>	Rot2 = Matrix<double>::rotationY3D(90.0);
+	Matrix<double>	Rot2 = Matrix<double>::rotationY3D(-90.0);
 	std::cout << "Rot2\n" << Rot2 << std::endl;
 
 	Matrix<double>	rot2xvec3 = Rot2 * myVec3;
 	std::cout << "Rot2 * Vec3\n" << rot2xvec3 << std::endl;
 
-	Matrix<double>	Rot3 = Matrix<double>::rotationZ3D(90.0);
+	Matrix<double>	Rot3 = Matrix<double>::rotationZ3D(-90.0);
 	std::cout << "Rot3\n" << Rot3 << std::endl;
 
 	Matrix<double>	rot3xvec3 = Rot3 * myVec3;
 	std::cout << "Rot3 * Vec3\n" << rot3xvec3 << std::endl;
+
+	Matrix<double>	Rot4 = Matrix<double>::rotation3D(-90.0,
+		Matrix<double>(0.662, 0.2, 0.722, Vec_axis)); // Rotation axis
+	std::cout << "Rot4\n" << Rot4 << std::endl;
+
+	Matrix<double>	rot4xvec3 = Rot4 * myVec3;
+	std::cout << "Rot4 * Vec3\n" << rot4xvec3 << std::endl;
 }

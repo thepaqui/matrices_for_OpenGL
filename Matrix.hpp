@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 02:20:47 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 04:00:45 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,18 @@
 #  define  M_PI  3.1415926535897932384626433
 # endif
 
-# define MAT_REGULAR 0
-# define MAT_VECTOR 1
-# define MAT_IDENTITY 2
-typedef uint8_t Mat_type;
+typedef enum
+{
+	Mat_regular,
+	Mat_vector,
+	Mat_identity
+}	Mat_type;
+
+typedef enum
+{
+	Vec_axis,
+	Vec_point
+}	Vec_type;
 
 template <typename T>
 class Matrix
@@ -43,18 +51,21 @@ private	:
 	{ return (obj.getRows() == this->getCols()); };
 
 public	:
-	Matrix(const size_t rows, const size_t columns, Mat_type type = MAT_REGULAR);
+	Matrix(const size_t rows, const size_t columns, const Mat_type type = Mat_regular);
 	Matrix(const Matrix &obj);
-	Matrix(const size_t rows, const size_t columns,
-		std::initializer_list<T> data);
+	Matrix(const size_t rows, const size_t columns, const std::initializer_list<T> data);
+	Matrix(const T x, const T y, const T z, const Vec_type type);
 	~Matrix() {};
 
 	size_t	getRows() const noexcept { return this->_rows; };
 	size_t	getCols() const noexcept { return this->_columns; };
+	size_t	getSize() const noexcept { return (this->_rows * this->_columns); };
 	const T	*getData() const noexcept { return this->_data.data(); };
 
-	T		getElem(const uint8_t i, const uint8_t j) const;
-	void	setElem(const uint8_t i, const uint8_t j, const T n);
+	T		getElem(const size_t i, const size_t j) const;
+	T		getElem(const size_t ind) const;
+	void	setElem(const size_t i, const size_t j, const T n);
+	void	setElem(const size_t ind, const T n);
 
 	Matrix	&operator=(const Matrix &obj);
 	Matrix	operator+(const Matrix &obj) const;
@@ -77,7 +88,9 @@ public	:
 
 	static T	vec2DLength(const Matrix &obj);
 	static T	vec3DLength(const Matrix &obj);
+	static T	vecLength(const Matrix &obj);
 
+	static Matrix	normalize(const Matrix &obj);
 	static Matrix	transpose(const Matrix &obj);
 	static Matrix	average(const Matrix &obj1, const Matrix &obj2);
 
@@ -86,12 +99,11 @@ public	:
 	static Matrix	translation(const T x, const T y);
 	static Matrix	translation(const T x, const T y, const T z);
 
-	// 3D rotation around the X axis (clockwise)
 	static Matrix	rotationX3D(const T angleInDegrees);
-	// 3D rotation around the Y axis (clockwise)
 	static Matrix	rotationY3D(const T angleInDegrees);
-	// 3D rotation around the Z axis (clockwise)
 	static Matrix	rotationZ3D(const T angleInDegrees);
+	static Matrix	rotation3D(const T angleInDegrees, const Matrix &axis);
+	static Matrix	rotation2D(const T angleInDegrees);
 };
 
 template <typename T>

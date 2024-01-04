@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 02:22:13 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 04:12:09 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@
 
 // Constructors
 
-// Unspecified type is MAT_REGULAR
-// MAT_REGULAR fills with 0s
-// MAT_VECTOR fills with 1s
-// MAT_IDENTITY creates an identity matrix of given size if possible
+// Unspecified type is Mat_regular
+// Mat_regular fills with 0s
+// Mat_vector fills with 1s
+// Mat_identity creates an identity matrix of given size if possible
 template <typename T>
-Matrix<T>::Matrix(const size_t rows, const size_t columns, Mat_type type)
+Matrix<T>::Matrix(const size_t rows, const size_t columns, const Mat_type type)
 : _rows(rows), _columns(columns)
 {
-	if (type != MAT_REGULAR && type != MAT_VECTOR && type != MAT_IDENTITY)
+	if (type != Mat_regular && type != Mat_vector && type != Mat_identity)
 		throw std::invalid_argument("Invalid matrix type");
 
 	if (this->getRows() == 0 || this->getCols() == 0)
 		throw std::invalid_argument("Matrix can't have size of 0");
 
-	if (type == MAT_VECTOR && Matrix::isVector(*this) == false)
+	if (type == Mat_vector && Matrix::isVector(*this) == false)
 		throw std::invalid_argument("Invalid vector size");
 
-	if (type == MAT_IDENTITY)
+	if (type == Mat_identity)
 	{
 		if (this->getRows() != this->getCols())
 			throw std::invalid_argument("Identity matrix needs to be square");
@@ -42,19 +42,19 @@ Matrix<T>::Matrix(const size_t rows, const size_t columns, Mat_type type)
 			for (size_t j = 0; j < this->getCols(); j++)
 			{
 				if (i == j)
-					_data.push_back(1);
+					this->_data.push_back(1);
 				else
-					_data.push_back(0);
+					this->_data.push_back(0);
 			}
 		}
 		return ;
 	}
 
-	size_t	size = this->getCols() * this->getRows();
-	if (type == MAT_VECTOR)
-		_data.assign(size, 1);
+	size_t	size = this->getSize();
+	if (type == Mat_vector)
+		this->_data.assign(size, 1);
 	else
-		_data.assign(size, 0);
+		this->_data.assign(size, 0);
 }
 
 template <typename T>
@@ -68,7 +68,7 @@ Matrix<T>::Matrix(const Matrix<T> &obj)
 
 template <typename T>
 Matrix<T>::Matrix(const size_t rows, const size_t columns,
-	std::initializer_list<T> data)
+	const std::initializer_list<T> data)
 : _rows(rows), _columns(columns)
 {
 	if (this->getRows() == 0 || this->getCols() == 0)
@@ -79,10 +79,26 @@ Matrix<T>::Matrix(const size_t rows, const size_t columns,
 	this->_data.assign(data);
 }
 
+// Creates a column vector
+// Vec_point creates a vector (x, y, z, 1)
+// Vec_axis creates a vector (x, y, z)
+template <typename T>
+Matrix<T>::Matrix(const T x, const T y, const T z, const Vec_type type)
+: _rows(3 + type), _columns(1)
+{
+	if (type != Vec_point && type != Vec_axis)
+		throw std::invalid_argument("Invalid vector type");
+	this->_data.push_back(x);
+	this->_data.push_back(y);
+	this->_data.push_back(z);
+	if (type == Vec_point)
+		this->_data.push_back(1);
+}
+
 // Methods
 
 template <typename T>
-T	Matrix<T>::getElem(const uint8_t i, const uint8_t j) const
+T	Matrix<T>::getElem(const size_t i, const size_t j) const
 {
 	if (i >= this->getRows() || j >= this->getCols())
 		throw std::out_of_range("Matrix read access out of range");
@@ -90,11 +106,27 @@ T	Matrix<T>::getElem(const uint8_t i, const uint8_t j) const
 }
 
 template <typename T>
-void	Matrix<T>::setElem(const uint8_t i, const uint8_t j, const T n)
+T	Matrix<T>::getElem(const size_t ind) const
+{
+	if (ind >= this->getSize())
+		throw std::out_of_range("Matrix read access out of range");
+	return this->_data[ind];
+}
+
+template <typename T>
+void	Matrix<T>::setElem(const size_t i, const size_t j, const T n)
 {
 	if (i >= this->getRows() || j >= this->getCols())
 		throw std::out_of_range("Matrix write access out of range");
 	this->_data[index(i,j)] = n;
+}
+
+template <typename T>
+void	Matrix<T>::setElem(const size_t ind, const T n)
+{
+	if (ind >= this->getSize())
+		throw std::out_of_range("Matrix write access out of range");
+	this->_data[ind] = n;
 }
 
 // Operator overloads
@@ -119,7 +151,7 @@ Matrix<T>	Matrix<T>::operator+(const Matrix<T> &obj) const
 	Matrix<T>	ret(*this);
 	for (size_t i = 0; i < ret.getRows(); i++)
 		for (size_t j = 0; j < ret.getCols(); j++)
-			ret._data[index(i,j)] += obj._data[index(i,j)];
+			ret._data[index(i,j)] += obj.getElem(i,j);
 	return ret;
 }
 
@@ -132,7 +164,7 @@ Matrix<T>	Matrix<T>::operator-(const Matrix<T> &obj) const
 	Matrix<T>	ret(*this);
 	for (size_t i = 0; i < ret.getRows(); i++)
 		for (size_t j = 0; j < ret.getCols(); j++)
-			ret._data[index(i,j)] -= obj._data[index(i,j)];
+			ret._data[index(i,j)] -= obj.getElem(i,j);
 	return ret;
 }
 
@@ -202,40 +234,64 @@ std::ostream	&operator<<(std::ostream &ostream, const Matrix<T> &obj)
 
 // Others
 
+// Ignores 3rd coordinate if present
 template <typename T>
 T	Matrix<T>::vec2DLength(const Matrix &obj)
 {
 	if (Matrix::isVector(obj) == false)
 		throw std::invalid_argument("Can only get length from a vector");
-	size_t	dimensions = obj.getCols() * obj.getRows();
+	size_t	dimensions = obj.getSize();
 	if (dimensions < 2 || dimensions > 3)
 		throw std::invalid_argument("Bad 2D vector size (2 or 3 only)");
 
-	const T	*coordinates = obj.getData();
 	T	length = 0;
 	for (size_t i = 0; i < 2; i++)
-		length += coordinates[i] * coordinates[i];
+		length += obj.getElem(i) * obj.getElem(i);
+	length = sqrt(length);
+
+	return length;
+}
+
+// Ignores 4th coordinate if present
+template <typename T>
+T	Matrix<T>::vec3DLength(const Matrix &obj)
+{
+	if (Matrix::isVector(obj) == false)
+		throw std::invalid_argument("Can only get length from a vector");
+	size_t	dimensions = obj.getSize();
+	if (dimensions < 3 || dimensions > 4)
+		throw std::invalid_argument("Bad 3D vector size (3 or 4 only)");
+
+	T	length = 0;
+	for (size_t i = 0; i < 3; i++)
+		length += obj.getElem(i) * obj.getElem(i);
 	length = sqrt(length);
 
 	return length;
 }
 
 template <typename T>
-T	Matrix<T>::vec3DLength(const Matrix &obj)
+T	Matrix<T>::vecLength(const Matrix &obj)
 {
 	if (Matrix::isVector(obj) == false)
 		throw std::invalid_argument("Can only get length from a vector");
-	size_t	dimensions = obj.getCols() * obj.getRows();
-	if (dimensions < 3 || dimensions > 4)
-		throw std::invalid_argument("Bad 3D vector size (3 or 4 only)");
+	size_t	dimensions = obj.getSize();
 
-	const T	*coordinates = obj.getData();
 	T	length = 0;
-	for (size_t i = 0; i < 3; i++)
-		length += coordinates[i] * coordinates[i];
+	for (size_t i = 0; i < dimensions; i++)
+		length += obj.getElem(i) * obj.getElem(i);
 	length = sqrt(length);
 
 	return length;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::normalize(const Matrix &obj)
+{
+	if (isVector(obj) == false)
+		throw std::invalid_argument("Can't normalize non-vector matrix");
+
+	return (obj / Matrix::vecLength(obj));
 }
 
 template <typename T>
@@ -260,74 +316,124 @@ Matrix<T>	Matrix<T>::average(const Matrix &obj1, const Matrix &obj2)
 template <typename T>
 Matrix<T>	Matrix<T>::scaling(const T x, const T y)
 {
-	Matrix	ret(3, 3, MAT_IDENTITY);
-	ret.setElem(0, 0, x);
-	ret.setElem(1, 1, y);
+	Matrix	ret(3, 3, Mat_identity);
+	ret.setElem(0, x);
+	ret.setElem(4, y);
 	return ret;
 }
 
 template <typename T>
 Matrix<T>	Matrix<T>::scaling(const T x, const T y, const T z)
 {
-	Matrix	ret(4, 4, MAT_IDENTITY);
-	ret.setElem(0, 0, x);
-	ret.setElem(1, 1, y);
-	ret.setElem(2, 2, z);
+	Matrix	ret(4, 4, Mat_identity);
+	ret.setElem(0, x);
+	ret.setElem(5, y);
+	ret.setElem(10, z);
 	return ret;
 }
 
 template <typename T>
 Matrix<T>	Matrix<T>::translation(const T x, const T y)
 {
-	Matrix	ret(3, 3, MAT_IDENTITY);
-	ret.setElem(0, 2, x);
-	ret.setElem(1, 2, y);
+	Matrix	ret(3, 3, Mat_identity);
+	ret.setElem(2, x);
+	ret.setElem(5, y);
 	return ret;
 }
 
 template <typename T>
 Matrix<T>	Matrix<T>::translation(const T x, const T y, const T z)
 {
-	Matrix	ret(4, 4, MAT_IDENTITY);
-	ret.setElem(0, 3, x);
-	ret.setElem(1, 3, y);
-	ret.setElem(2, 3, z);
+	Matrix	ret(4, 4, Mat_identity);
+	ret.setElem(3, x);
+	ret.setElem(7, y);
+	ret.setElem(11, z);
 	return ret;
 }
 
+// 3D rotation around the X axis (counter-clockwise ?)
 template <typename T>
 Matrix<T>	Matrix<T>::rotationX3D(const T angleInDegrees)
 {
 	T	rad = degToRad(angleInDegrees);
-	Matrix	ret(4, 4, MAT_IDENTITY);
-	ret.setElem(1, 1, -cos(rad));
-	ret.setElem(1, 2, sin(rad));
-	ret.setElem(2, 1, -sin(rad));
-	ret.setElem(2, 2, -cos(rad));
+	Matrix	ret(4, 4, Mat_identity);
+	ret.setElem(5, cos(rad));
+	ret.setElem(6, -sin(rad));
+	ret.setElem(9, sin(rad));
+	ret.setElem(10, cos(rad));
 	return ret;
 }
 
+// 3D rotation around the Y axis (counter-clockwise ?)
 template <typename T>
 Matrix<T>	Matrix<T>::rotationY3D(const T angleInDegrees)
 {
 	T	rad = degToRad(angleInDegrees);
-	Matrix	ret(4, 4, MAT_IDENTITY);
-	ret.setElem(0, 0, -cos(rad));
-	ret.setElem(0, 2, -sin(rad));
-	ret.setElem(2, 0, sin(rad));
-	ret.setElem(2, 2, -cos(rad));
+	Matrix	ret(4, 4, Mat_identity);
+	ret.setElem(0, cos(rad));
+	ret.setElem(2, sin(rad));
+	ret.setElem(8, -sin(rad));
+	ret.setElem(10, cos(rad));
 	return ret;
 }
 
+// 3D rotation around the Z axis (counter-clockwise ?)
 template <typename T>
 Matrix<T>	Matrix<T>::rotationZ3D(const T angleInDegrees)
 {
 	T	rad = degToRad(angleInDegrees);
-	Matrix	ret(4, 4, MAT_IDENTITY);
-	ret.setElem(0, 0, -cos(rad));
-	ret.setElem(0, 1, sin(rad));
-	ret.setElem(1, 0, -sin(rad));
-	ret.setElem(1, 1, -cos(rad));
+	Matrix	ret(4, 4, Mat_identity);
+	ret.setElem(0, cos(rad));
+	ret.setElem(1, -sin(rad));
+	ret.setElem(4, sin(rad));
+	ret.setElem(5, cos(rad));
+	return ret;
+}
+
+// 3D rotation around the given axis (counter-clockwise ?)
+// axis is a 3D vector and does not need to be normalized beforehand
+template <typename T>
+Matrix<T>	Matrix<T>::rotation3D(const T angleInDegrees, const Matrix &axis)
+{
+	if (isVector(axis) == false || axis.getSize() != 3)
+		throw std::invalid_argument("Bad rotation axis");
+
+	Matrix	naxis = Matrix::normalize(axis);
+	T		rx = naxis.getElem(0);
+	T		ry = naxis.getElem(1);
+	T		rz = naxis.getElem(2);
+
+	T		rad = degToRad(angleInDegrees);
+	double	_cos = cos(rad);
+	double	_sin = sin(rad);
+	double	_icos = 1 - _cos;
+
+	Matrix	ret(4, 4, Mat_identity);
+	ret.setElem(0, _cos + (rx * rx * _icos));
+	ret.setElem(1, (rx * ry * _icos) - (rz * _sin));
+	ret.setElem(2, (rx * rz * _icos) + (ry * _sin));
+
+	ret.setElem(4, (ry * rx * _icos) + (rz * _sin));
+	ret.setElem(5, _cos + (ry * ry * _icos));
+	ret.setElem(6, (ry * rz * _icos) - (rx * _sin));
+
+	ret.setElem(8, (rz * rx * _icos) - (ry * _sin));
+	ret.setElem(9, (rz * ry * _icos) + (rx * _sin));
+	ret.setElem(10, _cos + (rz * rz * _icos));
+
+	return ret;
+}
+
+// 2D rotation (counter-clockwise)
+template <typename T>
+Matrix<T>	Matrix<T>::rotation2D(const T angleInDegrees)
+{
+	T	rad = degToRad(angleInDegrees);
+	Matrix	ret(3, 3, Mat_identity);
+	ret.setElem(0, cos(rad));
+	ret.setElem(1, -sin(rad));
+	ret.setElem(3, sin(rad));
+	ret.setElem(4, cos(rad));
 	return ret;
 }
 
