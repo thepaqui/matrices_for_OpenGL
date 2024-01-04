@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/03 16:41:02 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 01:11:45 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,16 @@ Matrix<T>	Matrix<T>::operator*(const Matrix &obj) const
 }
 
 template <typename T>
+Matrix<T>	Matrix<T>::operator/(const T n) const
+{
+	Matrix<T>	ret(*this);
+	for (size_t i = 0; i < ret.getRows(); i++)
+		for (size_t j = 0; j < ret.getCols(); j++)
+			ret._data[index(i,j)] /= n;
+	return ret;
+}
+
+template <typename T>
 Matrix<T>	operator*(const T n, const Matrix<T> &obj)
 {
 	Matrix<T>	ret(obj.getRows(), obj.getCols());
@@ -204,7 +214,7 @@ T	Matrix<T>::vec2DLength(const Matrix &obj)
 	const T	*coordinates = obj.getData();
 	T	length = 0;
 	for (size_t i = 0; i < 2; i++)
-		length += data[i] * data[i];
+		length += coordinates[i] * coordinates[i];
 	length = sqrt(length);
 
 	return length;
@@ -222,7 +232,7 @@ T	Matrix<T>::vec3DLength(const Matrix &obj)
 	const T	*coordinates = obj.getData();
 	T	length = 0;
 	for (size_t i = 0; i < 3; i++)
-		length += data[i] * data[i];
+		length += coordinates[i] * coordinates[i];
 	length = sqrt(length);
 
 	return length;
@@ -235,6 +245,15 @@ Matrix<T>	Matrix<T>::transpose(const Matrix &obj)
 	for (size_t i = 0; i < obj.getRows(); i++)
 		for (size_t j = 0; j < obj.getCols(); j++)
 			ret.setElem(j, i, obj.getElem(i, j));
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::average(const Matrix &obj1, const Matrix &obj2)
+{
+	if (Matrix::isSameSize(obj1, obj2) == false)
+		throw std::invalid_argument("Cannot get average of matrices of different sizes");
+	Matrix	ret = (obj1 + obj2) / 2;
 	return ret;
 }
 

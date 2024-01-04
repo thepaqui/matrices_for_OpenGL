@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/03 15:54:32 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 01:17:05 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ void	testMatrices()
 	Matrix<int>	idxmat1 = id * myMat1;
 	std::cout << "id * Mat1\n" << idxmat1 << std::endl;
 
+	Matrix<int>	mat1div2 = myMat1 / 2;
+	std::cout << "Mat1 / 2\n" << mat1div2 << std::endl;
+
 	Matrix<double>	myMat2(4, 4, {
 		2.0,	7.0,	9.5,	3.1,
 		5.0,	12.0,	1.5,	8.2,
@@ -51,6 +54,9 @@ void	testMatrices()
 	Matrix<double>	mat2x3 = myMat2 * 3.0;
 	std::cout << "Mat2 * 3.0\n" << mat2x3 << std::endl;
 
+	Matrix<double>	mat2div2 = myMat2 / 2.0;
+	std::cout << "Mat2 / 2.0\n" << mat2div2 << std::endl;
+
 	Matrix<int>	myMat3(4, 4, {
 		1,	8,	2,	10,
 		4,	8,	40,	1,
@@ -59,14 +65,17 @@ void	testMatrices()
 	});
 	std::cout << "Mat3\n" << myMat3 << std::endl;
 
+	Matrix<int>	mat3trans = Matrix<int>::transpose(myMat3);
+	std::cout << "Mat3 (transposed)\n" << mat3trans << std::endl;
+
 	Matrix<int>	mat1xmat3 = myMat1 * myMat3;
 	std::cout << "Mat1 * Mat3\n" << mat1xmat3 << std::endl;
 
 	Matrix<int>	mat3xmat1 = myMat3 * myMat1;
 	std::cout << "Mat3 * Mat1\n" << mat3xmat1 << std::endl;
 
-	Matrix<int>	mat3trans = Matrix<int>::transpose(myMat3);
-	std::cout << "Mat3 (transposed)\n" << mat3trans << std::endl;
+	Matrix<int>	mat1_3average = Matrix<int>::average(myMat1, myMat3);
+	std::cout << "Average of Mat1 and Mat3\n" << mat1_3average << std::endl;
 
 	Matrix<int>	myMat4(2, 3, {
 		1,	8,	2,
@@ -99,7 +108,8 @@ void	testVectors()
 		18,
 		1
 	});
-	std::cout << "Vec1\n" << myVec1 << std::endl;
+	std::cout << "Vec1\n" << myVec1;
+	std::cout << "length = " << Matrix<int>::vec3DLength(myVec1) << "\n" << std::endl;
 
 	Matrix<int>	id(4, 1, MAT_VECTOR);
 	std::cout << "id (default)\n" << id << std::endl;
@@ -119,7 +129,8 @@ void	testVectors()
 		7.5,
 		1.0
 	});
-	std::cout << "Vec2\n" << myVec2 << std::endl;
+	std::cout << "Vec2\n" << myVec2;
+	std::cout << "length = " << Matrix<double>::vec3DLength(myVec2) << "\n" << std::endl;
 
 	Matrix<double>	vec2x3 = myVec2 * 3.0;
 	std::cout << "Vec2 * 3.0\n" << vec2x3 << std::endl;
