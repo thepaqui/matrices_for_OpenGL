@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 16:38:33 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 16:52:22 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,6 +334,19 @@ Matrix<T>	Matrix<T>::scaling3D(const T x, const T y, const T z)
 	return ret;
 }
 
+// 2D rotation (counter-clockwise)
+template <typename T>
+Matrix<T>	Matrix<T>::rotation2D(const T angleInDegrees)
+{
+	T	rad = degToRad(angleInDegrees);
+	Matrix	ret(3, 3, Mat_identity);
+	ret.setElem(0, cos(rad));
+	ret.setElem(1, -sin(rad));
+	ret.setElem(3, sin(rad));
+	ret.setElem(4, cos(rad));
+	return ret;
+}
+
 // 3D rotation around the X axis (counter-clockwise ?)
 template <typename T>
 Matrix<T>	Matrix<T>::rotationX3D(const T angleInDegrees)
@@ -404,19 +417,6 @@ Matrix<T>	Matrix<T>::rotation3D(const T angleInDegrees, const Matrix &axis)
 	ret.setElem(9, (rz * ry * _icos) + (rx * _sin));
 	ret.setElem(10, _cos + (rz * rz * _icos));
 
-	return ret;
-}
-
-// 2D rotation (counter-clockwise)
-template <typename T>
-Matrix<T>	Matrix<T>::rotation2D(const T angleInDegrees)
-{
-	T	rad = degToRad(angleInDegrees);
-	Matrix	ret(3, 3, Mat_identity);
-	ret.setElem(0, cos(rad));
-	ret.setElem(1, -sin(rad));
-	ret.setElem(3, sin(rad));
-	ret.setElem(4, cos(rad));
 	return ret;
 }
 
