@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 04:15:11 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 16:20:04 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,22 +138,22 @@ void	testVectors()
 	Matrix<double>	vec2trans = Matrix<double>::transpose(myVec2);
 	std::cout << "Vec2 (transposed)\n" << vec2trans << std::endl;
 
-	Matrix<double>	Scale1 = Matrix<double>::scaling(0.5, 2.5, 2.0);
+	Matrix<double>	Scale1 = Matrix<double>::scaling3D(0.5, 2.5, 2.0);
 	std::cout << "Scale1\n" << Scale1 << std::endl;
 
 	Matrix<double>	scale1xvec2 = Scale1 * myVec2;
 	std::cout << "Scale1 * Vec2\n" << scale1xvec2 << std::endl;
 
-	Matrix<double>	Trans1 = Matrix<double>::translation(1.0, 5.0, -2.0);
+	Matrix<double>	Trans1 = Matrix<double>::translation3D(1.0, 5.0, -2.0);
 	std::cout << "Trans1\n" << Trans1 << std::endl;
 
 	Matrix<double>	trans1xvec2 = Trans1 * myVec2;
 	std::cout << "Trans1 * Vec2\n" << trans1xvec2 << std::endl;
 
-	Matrix<double>	Scale2 = Matrix<double>::scaling(2.0, 1.5);
+	Matrix<double>	Scale2 = Matrix<double>::scaling2D(2.0, 1.5);
 	std::cout << "Scale2\n" << Scale2 << std::endl;
 
-	Matrix<double>	Trans2 = Matrix<double>::translation(-0.5, -2.0);
+	Matrix<double>	Trans2 = Matrix<double>::translation2D(-0.5, -2.0);
 	std::cout << "Trans2\n" << Trans2 << std::endl;
 
 	Matrix<double>	myVec3(4, 1, {

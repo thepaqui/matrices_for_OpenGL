@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 04:12:09 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 16:21:01 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,8 +313,10 @@ Matrix<T>	Matrix<T>::average(const Matrix &obj1, const Matrix &obj2)
 	return ret;
 }
 
+// Transformations
+
 template <typename T>
-Matrix<T>	Matrix<T>::scaling(const T x, const T y)
+Matrix<T>	Matrix<T>::scaling2D(const T x, const T y)
 {
 	Matrix	ret(3, 3, Mat_identity);
 	ret.setElem(0, x);
@@ -323,31 +325,12 @@ Matrix<T>	Matrix<T>::scaling(const T x, const T y)
 }
 
 template <typename T>
-Matrix<T>	Matrix<T>::scaling(const T x, const T y, const T z)
+Matrix<T>	Matrix<T>::scaling3D(const T x, const T y, const T z)
 {
 	Matrix	ret(4, 4, Mat_identity);
 	ret.setElem(0, x);
 	ret.setElem(5, y);
 	ret.setElem(10, z);
-	return ret;
-}
-
-template <typename T>
-Matrix<T>	Matrix<T>::translation(const T x, const T y)
-{
-	Matrix	ret(3, 3, Mat_identity);
-	ret.setElem(2, x);
-	ret.setElem(5, y);
-	return ret;
-}
-
-template <typename T>
-Matrix<T>	Matrix<T>::translation(const T x, const T y, const T z)
-{
-	Matrix	ret(4, 4, Mat_identity);
-	ret.setElem(3, x);
-	ret.setElem(7, y);
-	ret.setElem(11, z);
 	return ret;
 }
 
@@ -434,6 +417,25 @@ Matrix<T>	Matrix<T>::rotation2D(const T angleInDegrees)
 	ret.setElem(1, -sin(rad));
 	ret.setElem(3, sin(rad));
 	ret.setElem(4, cos(rad));
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::translation2D(const T x, const T y)
+{
+	Matrix	ret(3, 3, Mat_identity);
+	ret.setElem(2, x);
+	ret.setElem(5, y);
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::translation3D(const T x, const T y, const T z)
+{
+	Matrix	ret(4, 4, Mat_identity);
+	ret.setElem(3, x);
+	ret.setElem(7, y);
+	ret.setElem(11, z);
 	return ret;
 }
 
