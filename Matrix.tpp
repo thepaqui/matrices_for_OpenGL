@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 16:21:01 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 16:38:33 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 
 // Constructors
 
-// Unspecified type is Mat_regular
-// Mat_regular fills with 0s
-// Mat_vector fills with 1s
-// Mat_identity creates an identity matrix of given size if possible
+// Unspecified type picks Mat_null
+// Mat_null fills with 0s
+// Mat_vector fills with 1s and checks dimensions (Nx1 or 1xM)
+// Mat_identity creates an identity matrix and checks dimensions (square)
 template <typename T>
 Matrix<T>::Matrix(const size_t rows, const size_t columns, const Mat_type type)
 : _rows(rows), _columns(columns)
 {
-	if (type != Mat_regular && type != Mat_vector && type != Mat_identity)
+	if (type != Mat_null && type != Mat_vector && type != Mat_identity)
 		throw std::invalid_argument("Invalid matrix type");
 
 	if (this->getRows() == 0 || this->getCols() == 0)

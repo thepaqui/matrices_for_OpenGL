@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 16:20:32 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/04 16:37:21 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef enum
 {
-	Mat_regular,
+	Mat_null,
 	Mat_vector,
 	Mat_identity
 }	Mat_type;
@@ -51,7 +51,7 @@ private	:
 	{ return (obj.getRows() == this->getCols()); };
 
 public	:
-	Matrix(const size_t rows, const size_t columns, const Mat_type type = Mat_regular);
+	Matrix(const size_t rows, const size_t columns, const Mat_type type = Mat_null);
 	Matrix(const Matrix &obj);
 	Matrix(const size_t rows, const size_t columns, const std::initializer_list<T> data);
 	Matrix(const T x, const T y, const T z, const Vec_type type);
