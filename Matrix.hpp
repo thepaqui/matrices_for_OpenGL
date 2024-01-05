@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/05 23:44:49 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/06 00:20:27 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ public	:
 
 	static bool	isVector(const Matrix &obj) noexcept
 	{ return (obj.getRows() == 1 || obj.getCols() == 1); };
+	static bool	isVec3(const Matrix &vec) noexcept
+	{ return (Matrix::isVector(vec) && vec.getSize() == 3); };
 	// Checks size and nb of rows and columns
 	static bool	isSameLayout(const Matrix &obj1, const Matrix &obj2) noexcept
 	{ return (obj1.getCols() == obj2.getCols() && obj1.getRows() == obj2.getRows()); };
@@ -111,6 +113,7 @@ public	:
 
 	static Matrix	scaling2D(const T x, const T y);
 	static Matrix	scaling3D(const T x, const T y, const T z);
+	static Matrix	scaling3D(const Matrix &vec3);
 
 	static Matrix	rotation2D(const T angleInDegrees);
 	static Matrix	rotationX3D(const T angleInDegrees);
@@ -120,6 +123,7 @@ public	:
 
 	static Matrix	translation2D(const T x, const T y);
 	static Matrix	translation3D(const T x, const T y, const T z);
+	static Matrix	translation3D(const Matrix &vec3);
 
 	// View
 

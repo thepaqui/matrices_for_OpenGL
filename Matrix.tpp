@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/05 23:48:35 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/06 00:31:26 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,12 +373,8 @@ T	Matrix<T>::dot(const Matrix &vec1, const Matrix &vec2)
 template <typename T>
 Matrix<T>	Matrix<T>::cross(const Matrix &vec1, const Matrix &vec2)
 {
-	if (Matrix::isVector(vec1) == false || Matrix::isVector(vec2) == false)
-		throw std::invalid_argument("Cross product only takes vectors");
-	if (Matrix::isSameSize(vec1, vec2) == false)
-		throw std::invalid_argument("Cannot get cross product of vectors of different sizes");
-	if (vec1.getSize() != 3)
-		throw std::invalid_argument("Cross product only defined for 3D vectors");
+	if (Matrix::isVec3(vec1) == false || Matrix::isVec3(vec2) == false)
+		throw std::invalid_argument("Cross product only takes 3D vectors");
 
 	const T	x1 = vec1.getElem(0);
 	const T	y1 = vec1.getElem(1);
@@ -413,6 +409,19 @@ Matrix<T>	Matrix<T>::scaling3D(const T x, const T y, const T z)
 	ret.setElem(0, x);
 	ret.setElem(5, y);
 	ret.setElem(10, z);
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::scaling3D(const Matrix &vec3)
+{
+	if (Matrix::isVec3(vec3) == false)
+		throw std::invalid_argument("3D scaling only takes 3D vector");
+
+	Matrix	ret(4, 4, Mat_identity);
+	ret.setElem(0, vec3.getElem(0));
+	ret.setElem(5, vec3.getElem(1));
+	ret.setElem(10, vec3.getElem(2));
 	return ret;
 }
 
@@ -473,7 +482,7 @@ Matrix<T>	Matrix<T>::rotationZ3D(const T angleInDegrees)
 template <typename T>
 Matrix<T>	Matrix<T>::rotation3D(const T angleInDegrees, const Matrix &axis)
 {
-	if (Matrix::isVector(axis) == false || axis.getSize() != 3)
+	if (Matrix::isVec3(axis) == false)
 		throw std::invalid_argument("Bad rotation axis");
 
 	Matrix	naxis = Matrix::normalize(axis);
@@ -522,10 +531,46 @@ Matrix<T>	Matrix<T>::translation3D(const T x, const T y, const T z)
 }
 
 template <typename T>
+Matrix<T>	Matrix<T>::translation3D(const Matrix &vec3)
+{
+	if (Matrix::isVec3(vec3) == false)
+		throw std::invalid_argument("3D translation only takes 3D vector");
+
+	Matrix	ret(4, 4, Mat_identity);
+	ret.setElem(3, vec3.getElem(0));
+	ret.setElem(7, vec3.getElem(1));
+	ret.setElem(11, vec3.getElem(2));
+	return ret;
+}
+
+template <typename T>
 Matrix<T>	Matrix<T>::lookAt(const Matrix<T> &camPos, const Matrix<T> &target,
 	const Matrix<T> &worldUp)
 {
-	
+	if (Matrix::isVec3(camPos) == false || Matrix::isVec3(target) == false
+		|| Matrix::isVec3(worldUp) == false)
+		throw std::invalid_argument("lookAt() only takes 3D vectors");
+
+	Matrix	camDir = Matrix::normalize(camPos - target);
+	Matrix	camRight = Matrix::normalize(Matrix::cross(worldUp, camDir));
+	Matrix	camUp = Matrix::cross(camDir, camRight);
+
+	Matrix	viewRot(4, 4, Mat_identity);
+	viewRot.setElem(0, camRight.getElem(0));
+	viewRot.setElem(1, camRight.getElem(1));
+	viewRot.setElem(2, camRight.getElem(2));
+	viewRot.setElem(4, camUp.getElem(0));
+	viewRot.setElem(5, camUp.getElem(1));
+	viewRot.setElem(6, camUp.getElem(2));
+	viewRot.setElem(8, camDir.getElem(0));
+	viewRot.setElem(9, camDir.getElem(1));
+	viewRot.setElem(10, camDir.getElem(2));
+
+	Matrix	viewTrans = Matrix::translation3D(camPos * static_cast<T>(-1));
+
+	Matrix	view = viewRot * viewTrans;
+
+	return view;
 }
 
 #endif

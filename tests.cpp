@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/05 23:36:21 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/06 00:30:37 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,12 @@ void	testMatrices()
 
 	Matrix<int>	mat5xmat4 = myMat5 * myMat4;
 	std::cout << "Mat5 * Mat4\n" << mat5xmat4 << std::endl;
+
+	Matrix<float>	cam1pos = Matrix<float>::vec3(0.0f, 2.0f, 3.0f);
+	Matrix<float>	cam1targ = Matrix<float>::vec3(0.0f, 0.0f, 0.0f);
+	Matrix<float>	cam1up = Matrix<float>::vec3(0.0f, 1.0f, 0.0f);
+	Matrix<float>	cam1 = Matrix<float>::lookAt(cam1pos, cam1targ, cam1up);
+	std::cout << "Cam1\n" << cam1 << std::endl;
 }
 
 void	testVectors()
@@ -218,4 +224,21 @@ void	testVectors()
 	Matrix<float>	crossV5V4 = Matrix<float>::cross(myVec5, myVec4);
 	std::cout << "Vec4 x Vec5\n" << crossV4V5;
 	std::cout << "Vec5 x Vec4\n" << crossV5V4 << std::endl;
+
+	Matrix<float>	myVec6(2, 1, {
+		-2.0f,
+		6.0f
+	});
+	std::cout << "Vec6\n" << myVec6;
+	std::cout << "length = " << Matrix<float>::vec2DLength(myVec6) << "\n" << std::endl;
+
+	Matrix<float>	myVec7(2, 1, {
+		7.0f,
+		3.0f
+	});
+	std::cout << "Vec7\n" << myVec7;
+	std::cout << "length = " << Matrix<float>::vec2DLength(myVec7) << "\n" << std::endl;
+
+	float	angleV6V7 = Matrix<float>::angle(myVec6, myVec7);
+	std::cout << "Angle between Vec4 and Vec5 = " << angleV6V7 << std::endl;
 }
