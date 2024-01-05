@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/05 22:36:11 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/05 23:36:21 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ void	testVectors()
 	std::cout << "Rot3 * Vec3\n" << rot3xvec3 << std::endl;
 
 	Matrix<double>	Rot4 = Matrix<double>::rotation3D(-90.0,
-		Matrix<double>::axis(0.662, 0.2, 0.722)); // Rotation axis
+		Matrix<double>::vec3(0.662, 0.2, 0.722)); // Rotation axis
 	std::cout << "Rot4\n" << Rot4 << std::endl;
 
 	Matrix<double>	rot4xvec3 = Rot4 * myVec3;

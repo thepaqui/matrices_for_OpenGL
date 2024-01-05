@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/05 22:17:24 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/05 23:44:49 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,12 @@ private	:
 
 	size_t	index(const uint8_t i, const uint8_t j) const noexcept
 	{ return (i * this->_columns + j); };
-	bool	isSameSize(const Matrix &obj) const noexcept
+	// Checks size and nb of rows and columns
+	bool	isSameLayout(const Matrix &obj) const noexcept
 	{ return (obj.getCols() == this->getCols() && obj.getRows() == this->getRows()); };
+	// Checks only size
+	bool	isSameSize(const Matrix &obj) const noexcept
+	{ return (obj.getSize() == this->getSize()); };
 	bool	canMultiply(const Matrix &obj) const noexcept
 	{ return (obj.getRows() == this->getCols()); };
 
@@ -76,9 +80,12 @@ public	:
 
 	static bool	isVector(const Matrix &obj) noexcept
 	{ return (obj.getRows() == 1 || obj.getCols() == 1); };
-	// Also checks same disposition
-	static bool	isSameSize(const Matrix &obj1, const Matrix &obj2) noexcept
+	// Checks size and nb of rows and columns
+	static bool	isSameLayout(const Matrix &obj1, const Matrix &obj2) noexcept
 	{ return (obj1.getCols() == obj2.getCols() && obj1.getRows() == obj2.getRows()); };
+	// Checks only size
+	static bool	isSameSize(const Matrix &obj1, const Matrix &obj2) noexcept
+	{ return (obj1.getSize() == obj2.getSize()); };
 	static bool	isEqual(const Matrix &obj1, const Matrix &obj2) noexcept;
 	static bool	canMultiply(const Matrix &obj1, const Matrix &obj2) noexcept
 	{ return (obj1.getRows() == obj2.getCols()); };
@@ -88,9 +95,10 @@ public	:
 	static T	radToDeg(const T rad) noexcept
 	{ return (rad * (180 / M_PI)); };
 
-	static T	vec2DLength(const Matrix &obj);
-	static T	vec3DLength(const Matrix &obj);
-	static T	vecLength(const Matrix &obj);
+	static Matrix	vec3(const T x, const T y, const T z);
+	static T		vec2DLength(const Matrix &obj);
+	static T		vec3DLength(const Matrix &obj);
+	static T		vecLength(const Matrix &obj);
 
 	static Matrix	normalize(const Matrix &obj);
 	static Matrix	transpose(const Matrix &obj);
@@ -109,10 +117,14 @@ public	:
 	static Matrix	rotationY3D(const T angleInDegrees);
 	static Matrix	rotationZ3D(const T angleInDegrees);
 	static Matrix	rotation3D(const T angleInDegrees, const Matrix &axis);
-	static Matrix	axis(const T x, const T y, const T z);
 
 	static Matrix	translation2D(const T x, const T y);
 	static Matrix	translation3D(const T x, const T y, const T z);
+
+	// View
+
+	static Matrix	lookAt(const Matrix &camPos, const Matrix &target,
+		const Matrix &worldUp);
 };
 
 template <typename T>

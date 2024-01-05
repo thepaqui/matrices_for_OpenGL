@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/05 22:24:07 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/05 23:48:35 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ Matrix<T>	&Matrix<T>::operator=(const Matrix<T> &obj)
 {
 	if (this == &obj)
 		return (*this);
-	if (this->isSameSize(obj) == false)
-		throw std::runtime_error("Mismatched matrix sizes when copying (assignment)");
+	if (this->isSameLayout(obj) == false)
+		throw std::runtime_error("Mismatched matrix layouts when copying (assignment)");
 	this->_data = obj._data;
 	return (*this);
 }
@@ -145,8 +145,8 @@ Matrix<T>	&Matrix<T>::operator=(const Matrix<T> &obj)
 template <typename T>
 Matrix<T>	Matrix<T>::operator+(const Matrix<T> &obj) const
 {
-	if (this->isSameSize(obj) == false)
-		throw std::runtime_error("Mismatched matrix sizes when adding");
+	if (this->isSameLayout(obj) == false)
+		throw std::runtime_error("Mismatched matrix layouts when adding");
 
 	Matrix<T>	ret(*this);
 	for (size_t i = 0; i < ret.getRows(); i++)
@@ -158,8 +158,8 @@ Matrix<T>	Matrix<T>::operator+(const Matrix<T> &obj) const
 template <typename T>
 Matrix<T>	Matrix<T>::operator-(const Matrix<T> &obj) const
 {
-	if (this->isSameSize(obj) == false)
-		throw std::runtime_error("Mismatched matrix sizes when subtracting");
+	if (this->isSameLayout(obj) == false)
+		throw std::runtime_error("Mismatched matrix layouts when subtracting");
 
 	Matrix<T>	ret(*this);
 	for (size_t i = 0; i < ret.getRows(); i++)
@@ -234,10 +234,11 @@ std::ostream	&operator<<(std::ostream &ostream, const Matrix<T> &obj)
 
 // Others
 
+// Also checks if both matrices have the same layout
 template <typename T>
 bool	Matrix<T>::isEqual(const Matrix<T> &obj1, const Matrix<T> &obj2) noexcept
 {
-	if (Matrix::isSameSize(obj1, obj2) == false)
+	if (Matrix::isSameLayout(obj1, obj2) == false)
 		return false;
 
 	size_t	size = obj1.getSize();
@@ -246,6 +247,14 @@ bool	Matrix<T>::isEqual(const Matrix<T> &obj1, const Matrix<T> &obj2) noexcept
 			return false;
 
 	return true;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::vec3(const T x, const T y, const T z)
+{
+	Matrix	ret(x, y, z, Vec_axis);
+
+	return ret;
 }
 
 // Ignores 3rd coordinate if present
@@ -302,7 +311,7 @@ T	Matrix<T>::vecLength(const Matrix &obj)
 template <typename T>
 Matrix<T>	Matrix<T>::normalize(const Matrix &obj)
 {
-	if (isVector(obj) == false)
+	if (Matrix::isVector(obj) == false)
 		throw std::invalid_argument("Can't normalize non-vector matrix");
 
 	return (obj / Matrix::vecLength(obj));
@@ -321,8 +330,8 @@ Matrix<T>	Matrix<T>::transpose(const Matrix &obj)
 template <typename T>
 Matrix<T>	Matrix<T>::average(const Matrix &obj1, const Matrix &obj2)
 {
-	if (Matrix::isSameSize(obj1, obj2) == false)
-		throw std::invalid_argument("Cannot get average of matrices of different sizes");
+	if (Matrix::isSameLayout(obj1, obj2) == false)
+		throw std::invalid_argument("Cannot get average of matrices of different layouts");
 	Matrix	ret = (obj1 + obj2) / 2;
 	return ret;
 }
@@ -411,7 +420,7 @@ Matrix<T>	Matrix<T>::scaling3D(const T x, const T y, const T z)
 template <typename T>
 Matrix<T>	Matrix<T>::rotation2D(const T angleInDegrees)
 {
-	T	rad = degToRad(angleInDegrees);
+	T	rad = Matrix::degToRad(angleInDegrees);
 	Matrix	ret(3, 3, Mat_identity);
 	ret.setElem(0, cos(rad));
 	ret.setElem(1, -sin(rad));
@@ -424,7 +433,7 @@ Matrix<T>	Matrix<T>::rotation2D(const T angleInDegrees)
 template <typename T>
 Matrix<T>	Matrix<T>::rotationX3D(const T angleInDegrees)
 {
-	T	rad = degToRad(angleInDegrees);
+	T	rad = Matrix::degToRad(angleInDegrees);
 	Matrix	ret(4, 4, Mat_identity);
 	ret.setElem(5, cos(rad));
 	ret.setElem(6, -sin(rad));
@@ -437,7 +446,7 @@ Matrix<T>	Matrix<T>::rotationX3D(const T angleInDegrees)
 template <typename T>
 Matrix<T>	Matrix<T>::rotationY3D(const T angleInDegrees)
 {
-	T	rad = degToRad(angleInDegrees);
+	T	rad = Matrix::degToRad(angleInDegrees);
 	Matrix	ret(4, 4, Mat_identity);
 	ret.setElem(0, cos(rad));
 	ret.setElem(2, sin(rad));
@@ -450,7 +459,7 @@ Matrix<T>	Matrix<T>::rotationY3D(const T angleInDegrees)
 template <typename T>
 Matrix<T>	Matrix<T>::rotationZ3D(const T angleInDegrees)
 {
-	T	rad = degToRad(angleInDegrees);
+	T	rad = Matrix::degToRad(angleInDegrees);
 	Matrix	ret(4, 4, Mat_identity);
 	ret.setElem(0, cos(rad));
 	ret.setElem(1, -sin(rad));
@@ -464,7 +473,7 @@ Matrix<T>	Matrix<T>::rotationZ3D(const T angleInDegrees)
 template <typename T>
 Matrix<T>	Matrix<T>::rotation3D(const T angleInDegrees, const Matrix &axis)
 {
-	if (isVector(axis) == false || axis.getSize() != 3)
+	if (Matrix::isVector(axis) == false || axis.getSize() != 3)
 		throw std::invalid_argument("Bad rotation axis");
 
 	Matrix	naxis = Matrix::normalize(axis);
@@ -472,7 +481,7 @@ Matrix<T>	Matrix<T>::rotation3D(const T angleInDegrees, const Matrix &axis)
 	T		ry = naxis.getElem(1);
 	T		rz = naxis.getElem(2);
 
-	T		rad = degToRad(angleInDegrees);
+	T		rad = Matrix::degToRad(angleInDegrees);
 	double	_cos = cos(rad);
 	double	_sin = sin(rad);
 	double	_icos = 1 - _cos;
@@ -494,14 +503,6 @@ Matrix<T>	Matrix<T>::rotation3D(const T angleInDegrees, const Matrix &axis)
 }
 
 template <typename T>
-Matrix<T>	Matrix<T>::axis(const T x, const T y, const T z)
-{
-	Matrix	ret(x, y, z, Vec_axis);
-
-	return ret;
-}
-
-template <typename T>
 Matrix<T>	Matrix<T>::translation2D(const T x, const T y)
 {
 	Matrix	ret(3, 3, Mat_identity);
@@ -518,6 +519,13 @@ Matrix<T>	Matrix<T>::translation3D(const T x, const T y, const T z)
 	ret.setElem(7, y);
 	ret.setElem(11, z);
 	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::lookAt(const Matrix<T> &camPos, const Matrix<T> &target,
+	const Matrix<T> &worldUp)
+{
+	
 }
 
 #endif
