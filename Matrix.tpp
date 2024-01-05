@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/06 00:31:26 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/06 00:40:13 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -551,8 +551,14 @@ Matrix<T>	Matrix<T>::lookAt(const Matrix<T> &camPos, const Matrix<T> &target,
 		|| Matrix::isVec3(worldUp) == false)
 		throw std::invalid_argument("lookAt() only takes 3D vectors");
 
+	// This unit vector actually points away from the camera's direction!
 	Matrix	camDir = Matrix::normalize(camPos - target);
+	// Unit vector that points to the right of the camera
+	// (positive X axis of camera space)
 	Matrix	camRight = Matrix::normalize(Matrix::cross(worldUp, camDir));
+	// No need to normalize this one, as camDirection and camRight are unit
+	// vectors AND orthogonal, so their cross product is automatically a
+	// unit vector!
 	Matrix	camUp = Matrix::cross(camDir, camRight);
 
 	Matrix	viewRot(4, 4, Mat_identity);
