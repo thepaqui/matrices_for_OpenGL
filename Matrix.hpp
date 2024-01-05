@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 17:45:29 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/05 22:17:24 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ public	:
 
 	static bool	isVector(const Matrix &obj) noexcept
 	{ return (obj.getRows() == 1 || obj.getCols() == 1); };
+	// Also checks same disposition
 	static bool	isSameSize(const Matrix &obj1, const Matrix &obj2) noexcept
 	{ return (obj1.getCols() == obj2.getCols() && obj1.getRows() == obj2.getRows()); };
+	static bool	isEqual(const Matrix &obj1, const Matrix &obj2) noexcept;
 	static bool	canMultiply(const Matrix &obj1, const Matrix &obj2) noexcept
 	{ return (obj1.getRows() == obj2.getCols()); };
 
@@ -93,6 +95,9 @@ public	:
 	static Matrix	normalize(const Matrix &obj);
 	static Matrix	transpose(const Matrix &obj);
 	static Matrix	average(const Matrix &obj1, const Matrix &obj2);
+	static T		angle(const Matrix &vec1, const Matrix &vec2);
+	static T		dot(const Matrix &vec1, const Matrix &vec2);
+	static Matrix	cross(const Matrix &vec1, const Matrix &vec2);
 
 	// Transformations
 

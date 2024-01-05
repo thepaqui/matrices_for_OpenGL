@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 17:46:25 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/05 22:36:11 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,4 +189,33 @@ void	testVectors()
 
 	Matrix<double>	rot4xvec3 = Rot4 * myVec3;
 	std::cout << "Rot4 * Vec3\n" << rot4xvec3 << std::endl;
+
+	Matrix<float>	myVec4(3, 1, {
+		4.3f,
+		5.7f,
+		-8.12f
+	});
+	std::cout << "Vec4\n" << myVec4;
+	std::cout << "length = " << Matrix<float>::vec3DLength(myVec4) << "\n" << std::endl;
+
+	Matrix<float>	myVec5(3, 1, {
+		-2.7f,
+		4.5f,
+		10.1f
+	});
+	std::cout << "Vec5\n" << myVec5;
+	std::cout << "length = " << Matrix<float>::vec3DLength(myVec5) << "\n" << std::endl;
+
+	float	angleV4V5 = Matrix<float>::angle(myVec4, myVec5);
+	float	angleV5V4 = Matrix<float>::angle(myVec5, myVec4);
+	std::cout << "Angle between Vec4 and Vec5 = " << angleV4V5 << std::endl;
+	std::cout << "Angle between Vec5 and Vec4 = " << angleV5V4 << std::endl;
+	float	dotV4V5 = Matrix<float>::dot(myVec4, myVec5);
+	float	dotV5V4 = Matrix<float>::dot(myVec5, myVec4);
+	std::cout << "Vec4 . Vec5 = " << dotV4V5 << std::endl;
+	std::cout << "Vec5 . Vec4 = " << dotV5V4 << std::endl;
+	Matrix<float>	crossV4V5 = Matrix<float>::cross(myVec4, myVec5);
+	Matrix<float>	crossV5V4 = Matrix<float>::cross(myVec5, myVec4);
+	std::cout << "Vec4 x Vec5\n" << crossV4V5;
+	std::cout << "Vec5 x Vec4\n" << crossV5V4 << std::endl;
 }

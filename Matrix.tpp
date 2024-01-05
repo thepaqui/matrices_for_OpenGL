@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/04 17:45:46 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/05 22:24:07 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,20 @@ std::ostream	&operator<<(std::ostream &ostream, const Matrix<T> &obj)
 
 // Others
 
+template <typename T>
+bool	Matrix<T>::isEqual(const Matrix<T> &obj1, const Matrix<T> &obj2) noexcept
+{
+	if (Matrix::isSameSize(obj1, obj2) == false)
+		return false;
+
+	size_t	size = obj1.getSize();
+	for (size_t i = 0; i < size; i++)
+		if (obj1.getElem(i) != obj2.getElem(i))
+			return false;
+
+	return true;
+}
+
 // Ignores 3rd coordinate if present
 template <typename T>
 T	Matrix<T>::vec2DLength(const Matrix &obj)
@@ -310,6 +324,65 @@ Matrix<T>	Matrix<T>::average(const Matrix &obj1, const Matrix &obj2)
 	if (Matrix::isSameSize(obj1, obj2) == false)
 		throw std::invalid_argument("Cannot get average of matrices of different sizes");
 	Matrix	ret = (obj1 + obj2) / 2;
+	return ret;
+}
+
+// Returns angle in degrees
+template <typename T>
+T	Matrix<T>::angle(const Matrix &vec1, const Matrix &vec2)
+{
+	if (Matrix::isVector(vec1) == false || Matrix::isVector(vec2) == false)
+		throw std::invalid_argument("Can only get angle from vectors");
+	if (Matrix::isSameSize(vec1, vec2) == false)
+		throw std::invalid_argument("Cannot get angle of vectors of different sizes");
+	if (vec1.getSize() != 3 && vec1.getSize() != 2)
+		throw std::invalid_argument("Angle only defined for 2D or 3D vectors");
+
+	T	ret = Matrix::dot(vec1, vec2) / (Matrix::vecLength(vec1) * Matrix::vecLength(vec2));
+	ret = Matrix::radToDeg(acos(ret));
+
+	return ret;
+}
+
+template <typename T>
+T	Matrix<T>::dot(const Matrix &vec1, const Matrix &vec2)
+{
+	if (Matrix::isVector(vec1) == false || Matrix::isVector(vec2) == false)
+		throw std::invalid_argument("Dot product only takes vectors");
+	if (Matrix::isSameSize(vec1, vec2) == false)
+		throw std::invalid_argument("Cannot get dot product of vectors of different sizes");
+
+	size_t	size = vec1.getSize();
+
+	T	ret = 0;
+	for (size_t i = 0; i < size; i++)
+		ret += vec1.getElem(i) * vec2.getElem(i);
+
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::cross(const Matrix &vec1, const Matrix &vec2)
+{
+	if (Matrix::isVector(vec1) == false || Matrix::isVector(vec2) == false)
+		throw std::invalid_argument("Cross product only takes vectors");
+	if (Matrix::isSameSize(vec1, vec2) == false)
+		throw std::invalid_argument("Cannot get cross product of vectors of different sizes");
+	if (vec1.getSize() != 3)
+		throw std::invalid_argument("Cross product only defined for 3D vectors");
+
+	const T	x1 = vec1.getElem(0);
+	const T	y1 = vec1.getElem(1);
+	const T	z1 = vec1.getElem(2);
+	const T	x2 = vec2.getElem(0);
+	const T	y2 = vec2.getElem(1);
+	const T	z2 = vec2.getElem(2);
+
+	Matrix	ret(3, 1, Mat_null);
+	ret.setElem(0, (y1 * z2) - (z1 * y2));
+	ret.setElem(1, (z1 * x2) - (x1 * z2));
+	ret.setElem(2, (x1 * y2) - (y1 * x2));
+
 	return ret;
 }
 
