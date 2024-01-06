@@ -34,6 +34,8 @@ This is best used with `float` and `double`.
 This class was made with column-matrices in mind, so don't try to use row-matrices, it won't work.  
 Though you can always use `Matrix::transpose()` to go from one to the other.  
 
+Don't forget that matrix-matrix multiplication and vector cross product are NOT commutative!
+
 ### OpenGL
 
 For use with OpenGL, I recommend making wrapper classes using this class.  
