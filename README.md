@@ -34,7 +34,7 @@ This is best used with `float` and `double`.
 This class was made with column-matrices in mind, so don't try to use row-matrices, it won't work.  
 Though you can always use `Matrix::transpose()` to go from one to the other.  
 
-Don't forget that matrix-matrix multiplication and vector cross product are NOT commutative!
+Don't forget that matrix-matrix multiplication and vector cross product are NOT commutative operations!
 
 ### OpenGL
 
@@ -48,6 +48,8 @@ I also have a `Camera` class that is a wrapper for the `Transform` class.
   
 So go have fun with extreme amounts of boilerplate!  
 All in all, yous should avoid using "*naked*" matrices.  
+
+⚠️ WARNING: OpenGL uses row-matrices, so you WILL have to transpose them, either yourself or you can let OpenGL do it for you.
 
 And remember! For model matrices, use the SRT order:
 - Scaling
