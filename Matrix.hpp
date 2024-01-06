@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/06 03:59:11 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/06 04:15:45 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ public	:
 	static T		dot(const Matrix &vec1, const Matrix &vec2);
 	static Matrix	cross(const Matrix &vec1, const Matrix &vec2);
 
-	// Transformations
+	// Transformation
 
 	static Matrix	scaling2D(const T x, const T y);
 	static Matrix	scaling3D(const T x, const T y, const T z);
@@ -130,7 +130,7 @@ public	:
 	static Matrix	lookAt(const Matrix &camPos, const Matrix &target,
 		const Matrix &worldUp);
 
-	// Projection Matrix
+	// Projection
 
 	static Matrix	orthographic(
 		const float left, const float right,
