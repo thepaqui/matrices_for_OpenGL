@@ -49,7 +49,11 @@ I also have a `Camera` class that is a wrapper for the `Transform` class.
 So go have fun with extreme amounts of boilerplate!  
 All in all, yous should avoid using "*naked*" matrices.  
 
-⚠️ WARNING: OpenGL uses row-matrices, so you WILL have to transpose them, either yourself or you can let OpenGL do it for you.
+⚠️  
+**WARNING**: OpenGL uses row-matrices, so you *WILL* have to transpose them.  
+You can either use the provided `Matrix::transpose()` function  
+or you can let OpenGL do it for you when sendind the matrix data to the GPU.  
+⚠️  
 
 And remember! For model matrices, use the SRT order:
 - Scaling
@@ -58,3 +62,15 @@ And remember! For model matrices, use the SRT order:
 
 This order prevents transformation matrices from negatively impacting each other.  
 Though it doesn't prevent Gimbal lock... (you're dreaming if you think I'm gonna learn what a fucking quaternion is)
+
+## Disclaimer
+
+This was made with the help of the [LearnOpenGL](https://learnopengl.com/) book,  
+cross-referenced with [GLM (OpenGL Mathematics)](https://github.com/g-truc/glm), a mathematics library tailor-made for OpenGL.  
+If you want to make a quality program, you should use GLM, not this.
+
+This was made as a learning experience, so bugs are to be expected.  
+I won't actively be maintaining this apart from what I personally need for my own projects.  
+I'd recommend using this as a reference if, like me, you're making your own Matrix library as a learning experience.
+
+Also, if you want to learn OpenGL, the [LearnOpenGL](https://learnopengl.com/) book really is a godsend, I cannot recommend it enough!
