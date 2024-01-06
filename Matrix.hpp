@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/06 00:20:27 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:59:11 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,16 @@ public	:
 
 	static Matrix	lookAt(const Matrix &camPos, const Matrix &target,
 		const Matrix &worldUp);
+
+	// Projection Matrix
+
+	static Matrix	orthographic(
+		const float left, const float right,
+		const float bottom, const float top,
+		const float nearZ, const float farZ);
+	static Matrix	perspective(
+		const float fovY, const float aspectRatio,
+		const float nearZ, const float farZ);
 };
 
 template <typename T>

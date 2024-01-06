@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/06 00:40:13 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/06 04:02:52 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -577,6 +577,60 @@ Matrix<T>	Matrix<T>::lookAt(const Matrix<T> &camPos, const Matrix<T> &target,
 	Matrix	view = viewRot * viewTrans;
 
 	return view;
+}
+
+// Projection Matrix
+
+// Makes an orthographic projection matrix
+// Takes the coordinates of the left, right, top and bottom of the frustum,
+// as well as the Z-coordinates of its near and far faces
+template <typename T>
+Matrix<T>	Matrix<T>::orthographic(
+	const float left, const float right,
+	const float bottom, const float top,
+	const float nearZ, const float farZ)
+{
+	Matrix	ret(4, 4, Mat_identity);
+
+	ret.setElem(0, 2.0f / (right - left));
+	ret.setElem(5, 2.0f / (top - bottom));
+	ret.setElem(10, -2.0f / (farZ - nearZ));
+
+	ret.setElem(3, -1.0f * ((right + left) / (right - left)));
+	ret.setElem(7, -1.0f * ((top + bottom) / (top - bottom)));
+	ret.setElem(11, -1.0f * ((farZ + nearZ) / (farZ - nearZ)));
+
+	return ret;
+}
+
+// Makes a perspective projection matrix
+// Takes the vertical FOV (in degrees),
+// the aspect ratio of the viewport (width / height),
+// as well as the Z-coordinates of the near and far faces of the frustum
+template <typename T>
+Matrix<T>	Matrix<T>::perspective(
+	const float fovY, const float aspectRatio,
+	const float nearZ, const float farZ)
+{
+	if (aspectRatio == 0.0f)
+		throw std::invalid_argument("Aspect ratio can't be 0");
+	if (nearZ == farZ)
+		throw std::invalid_argument("Frustum can't be flat");
+
+	Matrix	ret(4, 4, Mat_null);
+
+	const float	rad = Matrix::degToRad(fovY);
+	// This is the length of the segment from the camera's POV
+	// to the top of the far side of the frustum
+	const float	lenToFarTop = tan(rad / 2.0f); // FOV / 2 for right triangle
+
+	ret.setElem(0, 1.0f / (aspectRatio * lenToFarTop));
+	ret.setElem(5, 1.0f / (lenToFarTop));
+	ret.setElem(10, (-1.0f * (farZ + nearZ)) / (farZ - nearZ));
+	ret.setElem(11, (-2.0f * farZ * nearZ) / (farZ - nearZ));
+	ret.setElem(14, -1.0f);
+
+	return ret;
 }
 
 #endif
