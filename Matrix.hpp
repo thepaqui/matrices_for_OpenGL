@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/10 14:14:48 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:18:29 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ public	:
 	{ return (rad * (180 / M_PI)); };
 
 	static Matrix	vec3(const T x, const T y, const T z);
+	static Matrix	vec4(const T x, const T y, const T z, const T w);
 	static T		vec2DLength(const Matrix &obj);
 	static T		vec3DLength(const Matrix &obj);
 	static T		vecLength(const Matrix &obj);

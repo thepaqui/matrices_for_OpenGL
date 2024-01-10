@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/10 01:52:10 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:20:50 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,14 @@ template <typename T>
 Matrix<T>	Matrix<T>::vec3(const T x, const T y, const T z)
 {
 	Matrix	ret(x, y, z, Vec_axis);
+
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::vec4(const T x, const T y, const T z, const T w)
+{
+	Matrix	ret(4, 1, {x, y, z, w});
 
 	return ret;
 }
