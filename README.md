@@ -7,6 +7,7 @@ Made for the `scop` project for 42 Nice.
 ### Matrices and Vectors
 - Addition and subtraction
 - Scalar multiplication and division
+- Matrix-Matrix component multiplication
 - Matrix-Matrix multiplication
 - Transposition
 - Average of 2 matrices/vectors
