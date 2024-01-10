@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:19:57 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/06 00:30:37 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/10 01:44:15 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ void	testMatrices()
 
 	Matrix<int>	mat1_3average = Matrix<int>::average(myMat1, myMat3);
 	std::cout << "Average of Mat1 and Mat3\n" << mat1_3average << std::endl;
+
+	Matrix<int>	mat1_3compmult = Matrix<int>::compMult(myMat1, myMat3);
+	std::cout << "Component multiplication of Mat1 and Mat3\n" << mat1_3compmult << std::endl;
 
 	Matrix<int>	myMat4(2, 3, {
 		1,	8,	2,

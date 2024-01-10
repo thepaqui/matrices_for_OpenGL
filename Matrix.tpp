@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:38:58 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/06 04:02:52 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/10 01:52:10 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,24 @@ Matrix<T>	Matrix<T>::average(const Matrix &obj1, const Matrix &obj2)
 	if (Matrix::isSameLayout(obj1, obj2) == false)
 		throw std::invalid_argument("Cannot get average of matrices of different layouts");
 	Matrix	ret = (obj1 + obj2) / 2;
+	return ret;
+}
+
+template <typename T>
+Matrix<T>	Matrix<T>::compMult(const Matrix &obj1, const Matrix &obj2)
+{
+	if (Matrix::isSameLayout(obj1, obj2) == false)
+		throw std::invalid_argument("Cannot get component-multiplication of matrices of different layouts");
+	Matrix	ret(obj1);
+	for (size_t i = 0; i < ret.getRows(); i++)
+	{
+		for (size_t j = 0; j < ret.getCols(); j++)
+		{
+			const size_t	in = ret.index(i, j);
+			ret.setElem(in, ret.getElem(in) * obj2.getElem(in));
+		}
+	}
+
 	return ret;
 }
 
