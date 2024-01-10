@@ -6,7 +6,7 @@
 /*   By: thepaqui <thepaqui@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:01:45 by thepaqui          #+#    #+#             */
-/*   Updated: 2024/01/10 01:37:42 by thepaqui         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:14:48 by thepaqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,12 @@ public	:
 
 	static bool	isVector(const Matrix &obj) noexcept
 	{ return (obj.getRows() == 1 || obj.getCols() == 1); };
+	static bool	isVecSize(const Matrix &vec, const size_t size) noexcept
+	{ return (Matrix::isVector(vec) && vec.getSize() == size); };
 	static bool	isVec3(const Matrix &vec) noexcept
-	{ return (Matrix::isVector(vec) && vec.getSize() == 3); };
+	{ return Matrix::isVecSize(vec, 3); };
+	static bool	isVec4(const Matrix &vec) noexcept
+	{ return Matrix::isVecSize(vec, 4); };
 	// Checks size and nb of rows and columns
 	static bool	isSameLayout(const Matrix &obj1, const Matrix &obj2) noexcept
 	{ return (obj1.getCols() == obj2.getCols() && obj1.getRows() == obj2.getRows()); };
