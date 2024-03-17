@@ -48,7 +48,7 @@ You know, the ones that make you go from one space to the next.
 I also have a `Camera` class that is a wrapper for the `Transform` class.  
   
 So go have fun with extreme amounts of boilerplate!  
-All in all, yous should avoid using "*naked*" matrices.  
+All in all, you should avoid using "*naked*" matrices.  
 
 ⚠️  
 **WARNING**: OpenGL uses row-matrices, so you *WILL* have to transpose them.  
